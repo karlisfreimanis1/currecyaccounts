@@ -33,3 +33,11 @@ different currencies</li>
   <li>9# Test coverage should be not less than 80%</li>
   <li>10# Implemented web service should be resilient to 3rd party service unavailability</li>
 </ul>
+
+<h2>API paths</h2>
+<ul>
+  <li>#1 http://localhost/api/account-list</li>
+  <li>#2 http://localhost/api/account-transactions</li>
+  <li>#3 </li>
+
+</ul>

@@ -36,19 +36,42 @@ class DatabaseSeeder extends Seeder
         }
 
         $accounts = Account::all();
-        if($accounts->isEmpty()) {
+        if ($accounts->isEmpty()) {
             $newAccounts = [];
             foreach ($users as $user) {
                 foreach ($currencies->random(3) as $currency) {
                     $newAccounts[] = [
-                        'userId' =>  $user->id,
-                        'currencyId' =>  $currency->id,
-                        'currentBalance' => rand(0, 10^4)
+                        'userId' => $user->id,
+                        'currencyId' => $currency->id,
+                        'currentBalance' => rand(0, 10 ^ 4)
                     ];
                 }
             }
             Account::insert($newAccounts);
         }
 
+        $transactions = Transaction::all();
+        if ($transactions->isEmpty()) {
+            foreach ($accounts as $account) {
+                $newTransactions = [];
+                foreach (range(0, rand(1, 150)) as $row) {
+                    $randAcc = $accounts->random(1)->first();
+                    if ($randAcc->id !== $account->id) {
+                        $newTransactions[] = [
+                            'accountIdFrom' => $account->id,
+                            'accountIdTo' => $randAcc->id,
+                            'valueFrom' => rand(0, 100),
+                            'valueTo' => rand(0, 100),
+                            //this will make inaccurate transactions but this is just for volume in transaction list, pushing api to limit just for volume not smart
+                            'status' => 1,
+                            //processed
+                            'timeCreated' => date('Y-m-d H:i:s'),
+                            'timeProcessed' => date('Y-m-d H:i:s'),
+                        ];
+                    }
+                }
+                Transaction::insert($newTransactions);
+            }
+        }
     }
 }
