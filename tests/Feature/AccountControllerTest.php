@@ -10,8 +10,6 @@ use Tests\TestCase;
 
 class AccountControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     private const URI = 'api/account-list';
 
     /** @test */
@@ -22,6 +20,7 @@ class AccountControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertExactJson([]);
+        $user->delete();
     }
 
     /** @test */
@@ -47,6 +46,9 @@ class AccountControllerTest extends TestCase
                     'userId' => $user->id,
                 ]
             ]);
+        $user->delete();
+        $currency->delete();
+        $account->delete();
     }
 
     /** @test */
@@ -66,7 +68,7 @@ class AccountControllerTest extends TestCase
     }
 
     /** @test */
-    public function userExists(): void
+    public function userDoNotExists(): void
     {
         $response = $this->postJson($this::URI, ['userId' => 0]);
 
