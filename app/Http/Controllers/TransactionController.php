@@ -36,12 +36,19 @@ class TransactionController extends Controller
      */
     public function postTransferFonds(TransferFondsRequest $request): JsonResponse
     {
-        //this goes out of controller soon todo
+        if ($request->post()['accountIdFrom'] === $request->post()['accountIdTo']) {
+            return response()->json([
+                'errors' => [
+                    'Same account transactions not allowed'
+                ]
+            ]);
+        }
+
         $currentBalance = Account::where('id', $request->post()['accountIdFrom'])->pluck('currentBalance')->first();
         $currentReservedMoney = Transaction::where('accountIdFrom', $request->post()['accountIdFrom'])->where(
             'status',
             0
-        )->sum('valueFrom'); //todo try attempts
+        )->sum('valueFrom');
         $availableCredits = $currentBalance - $currentReservedMoney;
 
         if ($availableCredits < $request->post()['value']) {

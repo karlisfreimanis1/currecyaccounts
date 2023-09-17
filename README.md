@@ -5,12 +5,15 @@ reviewing best practices and testing some similar open-source solutions. At leas
 <ul>
   <li>git clone https://github.com/karlisfreimanis1/currecyaccounts.git</li>
   <li>cd currecyaccounts</li>
-  <li>docker compose up --build --force-recreate -d</li>
+  <li>cp .env.example .env</li>
+  <li>docker compose up --build -d</li>
   <li>docker exec -it mintos-php /bin/sh</li>
+  <li>composer install</li>
   <li>chmod -R ug+rwx storage bootstrap/cache && chgrp -R www-data storage bootstrap/cache</li>
   <li>php artisan migrate</li>
-  <li>php artisan db:seed</li>
-  <li></li>
+  <li>php artisan db:seed [optional for dummy data]</li>
+  <li>echo xdebug.mode=coverage > /usr/local/etc/php/conf.d/xdebug.ini [optinal]</li>
+  <li>vendor/bin/phpunit --configuration phpunit.xml --coverage-html tests/reports [optinal]</li>
 </ul>
 
 <h2>Task: Service should expose an HTTP API providing the following functionality</h2>
