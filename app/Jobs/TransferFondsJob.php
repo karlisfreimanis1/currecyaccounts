@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Transaction;
+use DateTime;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,17 +18,34 @@ class TransferFondsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public function maxTries()
-    {
-        return 5;
-    }
-
+    //this is just straight up not working as it is written in documentation, maybe missing some php extensions leave it for now
+    //https://laravel.com/docs/10.x/queues#max-job-attempts-and-timeout
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 1;
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 24;
+    public $backoff = [60,300, 1800];
     /**
      * The maximum number of unhandled exceptions to allow before failing.
      *
      * @var int
      */
-    public $maxExceptions = 12;
+    public $maxExceptions = 24;
+
+    /**
+     * Indicate if the job should be marked as failed on timeout.
+     *
+     * @var bool
+     */
+    public $failOnTimeout = false;
 
     /**
      * @var Transaction
@@ -44,13 +62,11 @@ class TransferFondsJob implements ShouldQueue
     }
 
     /**
-     * Calculate the number of seconds to wait before retrying the job.
-     *
-     * @return array<int, int>
+     * Determine the time at which the job should timeout.
      */
-    public function backoff(): array
+    public function retryUntil(): DateTime
     {
-        return [30, 300, 1800, 3600];
+        return now()->addHours(12);
     }
 
     /**
@@ -74,7 +90,7 @@ class TransferFondsJob implements ShouldQueue
             if ($response->ok() && !empty($response['rates'])) {
                 $exchangeRate = $response['rates'][$currencyToCode];
             } else {
-                $this->fail();
+                $this->release(now()->addSeconds(60));
             }
 
             $this->processTransaction(
