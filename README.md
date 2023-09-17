@@ -1,6 +1,3 @@
-<p>This is not going to be easy, more likely impossible to build scalable error-prone solution in short time. I have never worked with inner money management systems. I would probably spend a day
-reviewing best practices and testing some similar open-source solutions. At least 2 days building solution and at least one more day testing. Even then there would be some shortcomings</p>
-
 <h2>Installation:</h2>
 <ul>
   <li>git clone https://github.com/karlisfreimanis1/currecyaccounts.git</li>
@@ -42,5 +39,7 @@ different currencies</li>
   <li>#1 http://localhost/api/account-list</li>
   <li>#2 http://localhost/api/account-transactions</li>
   <li>#3 http://localhost/api/transfer-fonds</li>
-
 </ul>
+
+<h2>Final notes</h2>
+<p>I did as much as I could in the time that I had. Unfortunately isn't enough to fulfill all requirements. I use tasks like these to learn, but this time got stuck with a queue that didn't work as expected and in the documentation described. So I didn't manage to get working "service should be resilient to 3rd party service unavailability" and when I noticed that it wasn't progressing as well as expected I stopped writing tests, so it is not even close to 80% of test coverage.</p>
