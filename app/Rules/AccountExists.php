@@ -16,8 +16,8 @@ class AccountExists implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $account = Account::where('id', $value)->get()->first();
-        if ($account->isEmpty()) {
+        $isAccountFound = Account::where('id', $value)->get()->isEmpty();
+        if ($isAccountFound) {
             $fail('Account not found id:' . $value);
         }
     }
