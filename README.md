@@ -8,8 +8,8 @@ reviewing best practices and testing some similar open-source solutions. At leas
   <li>docker compose up --build --force-recreate -d</li>
   <li>docker exec -it mintos-php /bin/sh</li>
   <li>chmod -R ug+rwx storage bootstrap/cache && chgrp -R www-data storage bootstrap/cache</li>
-  <li></li>
-  <li></li>
+  <li>php artisan migrate</li>
+  <li>php artisan db:seed</li>
   <li></li>
 </ul>
 

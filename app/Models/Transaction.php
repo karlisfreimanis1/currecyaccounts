@@ -24,11 +24,17 @@ class Transaction extends Model
         'timeProcessed',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function accountFrom(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'accountIdFrom');
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function accountTo(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'accountIdTo');
