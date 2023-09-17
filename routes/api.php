@@ -17,4 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('account-list', [AccountController::class, 'postUserAccountList']);
 Route::post('account-transactions', [TransactionController::class, 'postAccountTransactions']);
+Route::post('transfer-fonds', [TransactionController::class, 'postTransferFonds']);
+
 

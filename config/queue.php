@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'database'),//Preferably it would be separate service like for instance redis, it just saves time for configuration
 
     /*
     |--------------------------------------------------------------------------

@@ -38,6 +38,6 @@ different currencies</li>
 <ul>
   <li>#1 http://localhost/api/account-list</li>
   <li>#2 http://localhost/api/account-transactions</li>
-  <li>#3 </li>
+  <li>#3 http://localhost/api/transfer-fonds</li>
 
 </ul>
