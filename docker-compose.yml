@@ -11,6 +11,18 @@ services:
      - "9001:9000"
     networks:
       - app-network
+  queue:
+    image: php
+    container_name: sarah-queue
+    restart: always
+    working_dir: /var/www/
+    command: php artisan queue:work --timeout=300 --tries=12 --delay=300
+    depends_on:
+      - php
+    volumes:
+      - ./:/var/www
+    networks:
+      - app-network
   nginx:
     image: nginx:stable-alpine
     container_name: ${APP_NAME}-nginx
